@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片旋转（优化布局 + 防抖动）</title>
+    <style>
+        /* 页面基础样式 */
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #000000;
+            overflow: hidden; /* 防止页面滚动 */
+        }
+
+        /* 旋转动画 */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* 旋转图片样式 */
+        .rotating {
+            width: 60vmin; /* 让图片适应屏幕 */
+            height: auto;
+            animation: rotate 2s linear infinite; /* 默认2秒/圈 */
+            will-change: transform; /* 让浏览器优化旋转 */
+        }
+
+        /* 固定控制面板在底部，避免重叠 */
+        .control-panel {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 按钮样式 */
+        .speed-button {
+            margin: 5px;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .speed-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 旋转的图片 -->
+    <div class="image-container">
+        <img id="image" src="main.png" class="rotating" alt="旋转的图片">
+    </div>
+
+    <!-- 固定在底部的按钮控制面板 -->
+    <div class="control-panel">
+        <p>选择旋转速度（秒/圈）：</p>
+        <button class="speed-button" onclick="changeSpeed(5)">5s</button>
+        <button class="speed-button" onclick="changeSpeed(2)">2s</button>
+        <button class="speed-button" onclick="changeSpeed(1)">1s</button>
+        <button class="speed-button" onclick="changeSpeed(0.5)">0.5s</button>
+        <button class="speed-button" onclick="changeSpeed(0.2)">0.2s</button>
+        <button class="speed-button" onclick="changeSpeed(0.1)">0.1s</button>
+        <button class="speed-button" onclick="changeSpeed(0.05)">0.05s</button>
+        <button class="speed-button" onclick="changeSpeed(0.02)">0.02s</button>
+        <button class="speed-button" onclick="changeSpeed(0.01)">0.01s</button>
+        <button class="speed-button" onclick="changeSpeed(0.005)">0.005s</button>
+        <button class="speed-button" onclick="changeSpeed(0.001)">0.001s</button>
+    </div>
+
+    <script>
+        function changeSpeed(speed) {
+            let image = document.getElementById("image");
+            image.style.animationDuration = speed + "s"; // 直接修改 CSS 动画时间
+        }
+    </script>
+
+</body>
+</html>
